@@ -9,7 +9,8 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
 
   const appointments = getAppointmentsForDay(state, state.day);
@@ -23,16 +24,24 @@ export default function Application(props) {
         url: `/api/days`}),
       axios({
         method: "GET",
-        url: `/api/appointments`})
+        url: `/api/appointments`}),
+        axios({
+          method: "GET",
+          url: `/api/interviewers`})
     ])
       .then((all) => {
-        setState({ days: all[0].data, appointments: all[1].data });
+        setState({ days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
         
     })
   }, []);
   const schedule = appointments.map((appointment) => {
     return (
-      <Appointment key={appointment.id} {...appointment} />
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={appointment.interview}
+      />
     );
   });
 
