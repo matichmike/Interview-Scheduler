@@ -3,7 +3,7 @@ import Appointment from 'components/Appointment';
 import "components/Application.scss";
 import DayList from "components/DayList";
 import axios from "axios";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
