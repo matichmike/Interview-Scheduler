@@ -87,6 +87,15 @@ onCancel={() => back()}
 onConfirm={deleting}
 />
 )}
+{mode === EDIT && (
+  <Form
+  name={props.interview.student}
+  interviewer={props.interview.interviewer.id}
+  interviewers={props.interviewers}
+  onSave={save}
+  onCancel={() => back()}
+  />
+)}
       </article>
     )
 }
