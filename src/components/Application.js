@@ -1,85 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Appointment from 'components/Appointment';
 import "components/Application.scss";
 import DayList from "components/DayList";
-import axios from "axios";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
-
-
+import useApplicationData from "components/hooks/useApplicationData";
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
-
-  function bookInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    return axios
-     .put(`http://localhost:8001/api/appointments/${id}`, appointment)
-     .then(res => {
-      setState({
-        ...state,
-        appointments
-      })
-      // .catch(err => {
-      //   console.log("Error", err);
-      // });
-     })
-  };
-
-  function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    return axios
-     .delete(`http://localhost:8001/api/appointments/${id}`)
-     .then(res => {
-      setState({
-        ...state,
-        appointments
-      })
-      // .catch(err => {
-      //   console.log("Error", err);
-      // });
-     })
-  };
-
-  
-
-  const setDay = day => setState({ ...state, day });
-  
-  useEffect(() => {
-    Promise.all([
-      axios({
-        method: "GET",
-        url: `/api/days`}),
-      axios({
-        method: "GET",
-        url: `/api/appointments`}),
-        axios({
-          method: "GET",
-          url: `/api/interviewers`})
-    ])
-      .then((all) => {
-        setState({ days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
-        
-    })
-  }, []);
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
   
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
