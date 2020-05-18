@@ -13,10 +13,7 @@ export default function Form(props) {
       return;
     }
   
-    props.onSave(name, interviewer);
-  }
-
-  function save () {
+    setError("");
     props.onSave(name, interviewer);
   }
 
