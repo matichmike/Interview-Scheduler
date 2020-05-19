@@ -90,8 +90,7 @@ it("loads data, edits an interview and keeps the spots remaining for Monday the 
     getByPlaceholderText(appointment, /enter student name/i),
     {
       target: { value: "Lydia Miller-Jones" }
-    }
-  );
+    });
   fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
   fireEvent.click(getByText(appointment, "Save"));
   debug();
