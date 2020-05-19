@@ -84,7 +84,7 @@ export default function useApplicationData() {
       axios.get(`/api/interviewers`)
     ])
       .then((all) => {
-        setState({ days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
+        setState({ ...state, days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
         
     })
   }, []);

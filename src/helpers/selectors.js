@@ -1,6 +1,6 @@
 export function getAppointmentsForDay(state, day) {
   const daysSorted = state.days.filter((dayItem) => { 
-    return dayItem.name === day
+    return dayItem.name.toLowerCase() === day.toLowerCase()
     })
   if (daysSorted.length === 0) {
     return [];
