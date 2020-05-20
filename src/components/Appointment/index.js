@@ -25,6 +25,9 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
+    if (name && interviewer) {
+      
+    
     const interview = {
       student: name,
       interviewer
@@ -38,6 +41,7 @@ export default function Appointment(props) {
       transition(ERROR_SAVE, true);
     })
   }
+}
 
   function deleting() {
     transition(DELETING, true);
