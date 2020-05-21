@@ -76,7 +76,7 @@ export default function useApplicationData() {
         setState({ ...state, days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
         
     })
-  });
+  }, []);
 
 return {
   state,
