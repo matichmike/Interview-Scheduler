@@ -104,11 +104,11 @@ onConfirm={deleting}
   />
 )}
 {mode === ERROR_SAVE && (
-  <Error message="Deleting Error" onClose={() => back()} />
+  <Error message="Saving Error" onClose={() => back()} />
 )}
 
 {mode === ERROR_DELETE && (
-  <Error message="Saving Error" onClose={() => back()} />
+  <Error message="Deleting Error" onClose={() => back()} />
 )}
       </article>
     )

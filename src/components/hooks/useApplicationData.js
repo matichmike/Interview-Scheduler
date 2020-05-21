@@ -11,6 +11,8 @@ export default function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
+  // update Spots is using the id to find the day to update among the list of days in state.days and is updating day.spots for that day (-1 for booking, +1 for cancellation)
+  
   function updateSpots(appointment_id, value) {
     let daysVar = state.days;
     for (let day of daysVar) {
@@ -19,19 +21,11 @@ export default function useApplicationData() {
       }
     }
     return daysVar;
-    // setState({...state, days: daysVar})
-    // Use the id to find the day to update among the list of days in state.days
-
-    // When you find that specific day, you will want to update day.spots 
-    //for that day (-1 for booking, +1 for cancellation) - value
-
-    // Update the state
-    
-    //day to update
   }
 
+  //book Interview function adds the interview to DB and decreases the # of available spots by 1, number of spots stays the same if the interview is being edited
   function bookInterview(id, interview) {
-    const spotUpdateValue = -1;
+    const spotUpdateValue = state.appointments[id].interview ? 0: -1;
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -47,12 +41,10 @@ export default function useApplicationData() {
         ...state,
         appointments, days: updateSpots(id, spotUpdateValue)
       })
-      // .catch(err => {
-      //   console.log("Error", err);
-      // });
      })
   };
 
+  //cancel Interview function removes the interview from DB and increases the # of available spots by 1
   function cancelInterview(id) {
     const spotUpdateValue = 1;
     const appointment = {
@@ -70,9 +62,6 @@ export default function useApplicationData() {
         ...state,
         appointments, days: updateSpots(id, spotUpdateValue)
       })
-      // .catch(err => {
-      //   console.log("Error", err);
-      // });
      })
   };
 
@@ -87,7 +76,7 @@ export default function useApplicationData() {
         setState({ ...state, days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
         
     })
-  }, []);
+  });
 
 return {
   state,
